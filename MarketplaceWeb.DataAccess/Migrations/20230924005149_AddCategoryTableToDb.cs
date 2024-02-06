@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MarketplaceWeb.Migrations
+namespace MarketplaceWeb.DataAccess.Migrations
 {
     public partial class AddCategoryTableToDb : Migration
     {

@@ -1,4 +1,5 @@
-using MarketplaceWeb.Data;
+
+using MarketplaceWeb.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

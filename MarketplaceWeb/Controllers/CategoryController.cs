@@ -1,4 +1,5 @@
-﻿using MarketplaceWeb.Data;
+﻿
+using MarketplaceWeb.DataAccess.Data;
 using MarketplaceWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 

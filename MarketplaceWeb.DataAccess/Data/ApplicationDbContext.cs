@@ -1,7 +1,7 @@
 ﻿using MarketplaceWeb.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace MarketplaceWeb.Data
+namespace MarketplaceWeb.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {
