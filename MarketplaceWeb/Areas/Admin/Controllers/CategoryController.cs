@@ -1,11 +1,11 @@
-﻿
-using MarketplaceWeb.DataAccess.Data;
+﻿using MarketplaceWeb.DataAccess.Data;
 using MarketplaceWeb.DataAccess.Repository.IRepository;
 using MarketplaceWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarketplaceWeb.Controllers
+namespace MarketplaceWeb.Areas.Admin.Controllers
 {
+    //[Area("Customer")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _UnitOfWork;
@@ -19,8 +19,9 @@ namespace MarketplaceWeb.Controllers
             return View(objCategoryList);
         }
 
-        public IActionResult Create() { 
-        
+        public IActionResult Create()
+        {
+
             return View();
         }
         [HttpPost]
@@ -99,7 +100,7 @@ namespace MarketplaceWeb.Controllers
 
             return View(categoryFromDb);
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
             Category? obj = _UnitOfWork.Category.Get(u => u.Id == id);
