@@ -2,6 +2,8 @@
 using MarketplaceWeb.DataAccess.Repository.IRepository;
 using MarketplaceWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace MarketplaceWeb.Areas.Admin.Controllers
 {
@@ -16,6 +18,12 @@ namespace MarketplaceWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList = _UnitOfWork.Product.GetAll().ToList();
+            IEnumerable<SelectListItem> CategoryList = _UnitOfWork.Category
+                .GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
             return View(objProductList);
         }
 
