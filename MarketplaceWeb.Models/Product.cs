@@ -43,5 +43,6 @@ namespace MarketplaceWeb.Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }  //navigation category
+        public string ImageUrl { get; set; }
     }
 }
