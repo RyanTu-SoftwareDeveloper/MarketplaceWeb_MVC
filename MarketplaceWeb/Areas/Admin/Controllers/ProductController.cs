@@ -18,17 +18,19 @@ namespace MarketplaceWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList = _UnitOfWork.Product.GetAll().ToList();
-            IEnumerable<SelectListItem> CategoryList = _UnitOfWork.Category
-                .GetAll().Select(u => new SelectListItem
-            {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
             return View(objProductList);
         }
 
         public IActionResult Create()
         {
+   
+            IEnumerable<SelectListItem> CategoryList = _UnitOfWork.Category
+                .GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+            ViewBag.CategoryList = CategoryList;
 
             return View();
         }
