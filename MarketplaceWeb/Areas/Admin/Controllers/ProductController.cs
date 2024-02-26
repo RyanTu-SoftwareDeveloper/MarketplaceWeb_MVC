@@ -1,6 +1,7 @@
 ﻿using MarketplaceWeb.DataAccess.Data;
 using MarketplaceWeb.DataAccess.Repository.IRepository;
 using MarketplaceWeb.Models;
+using MarketplaceWeb.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -23,29 +24,45 @@ namespace MarketplaceWeb.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-   
-            IEnumerable<SelectListItem> CategoryList = _UnitOfWork.Category
+            ProductVM productVM = new()
+            {
+                CategoryList = _UnitOfWork.Category
                 .GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
-                });
-            ViewBag.CategoryList = CategoryList;
-
-            return View();
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
         }
+  
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Create(ProductVM productVM)
         {
 
             if (ModelState.IsValid)
             {
-                _UnitOfWork.Product.Add(obj);
+                _UnitOfWork.Product.Add(productVM.Product);
                 _UnitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
-            return View();
+            else
+            {
+            
+           
+                productVM.CategoryList = _UnitOfWork.Category
+                  .GetAll().Select(u => new SelectListItem
+                {
+                  Text = u.Name,
+                  Value = u.Id.ToString()
+                });
+                return View(productVM);
+            
+             
+            }
+   
 
         }
 
