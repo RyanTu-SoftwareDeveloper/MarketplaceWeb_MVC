@@ -22,7 +22,7 @@ namespace MarketplaceWeb.Areas.Admin.Controllers
             return View(objProductList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
             ProductVM productVM = new()
             {
@@ -34,11 +34,22 @@ namespace MarketplaceWeb.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productVM);
+            if (id == null || id == 0)
+            {
+                //create
+                return View(productVM);
+            }
+            else
+            {
+                //update
+                productVM.Product = _UnitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
+            }
+  
         }
   
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
 
             if (ModelState.IsValid)
@@ -66,44 +77,7 @@ namespace MarketplaceWeb.Areas.Admin.Controllers
 
         }
 
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Product? productFromDb = _UnitOfWork.Product.Get(u => u.Id == id);
-            //Product? productFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
-            //Product? productFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
-            if (productFromDb == null)
-            {
-                return NotFound();
-            }
 
-            return View(productFromDb);
-        }
-        [HttpPost]
-        public IActionResult Edit(Product obj)
-        {
-            //validation
-            //if (obj.Name == obj.DisplayOrder.ToString())
-            //{
-            //    ModelState.AddModelError("Name", "The DisplayOrder cannot exactly match the Name.");
-            //}
-            //if(obj.Name != null && obj.Name.ToLower() == "test")
-            //{
-            //    ModelState.AddModelError("", "Test is an invalid value");
-            //}
-            if (ModelState.IsValid)
-            {
-                _UnitOfWork.Product.Update(obj);
-                _UnitOfWork.Save();
-                TempData["success"] = "Product updated successfully";
-                return RedirectToAction("Index");
-            }
-            return View();
-
-        }
 
         public IActionResult Delete(int? id)
         {
