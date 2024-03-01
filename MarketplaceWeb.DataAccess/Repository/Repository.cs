@@ -24,6 +24,7 @@ namespace MarketplaceWeb.DataAccess.Repository
             dbSet.Add(entity);  
         }
 
+
         public T Get(Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbSet;
