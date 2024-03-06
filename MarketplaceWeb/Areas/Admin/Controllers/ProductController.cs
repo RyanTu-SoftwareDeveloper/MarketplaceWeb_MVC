@@ -1,5 +1,5 @@
 ﻿using MarketplaceWeb.DataAccess.Data;
-using MarketplaceWeb.DataAccess.Repository.IRepository;
+using MarketplaceWeb.DataAccess.Repository.IRepository; 
 using MarketplaceWeb.Models;
 using MarketplaceWeb.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -132,5 +132,13 @@ namespace MarketplaceWeb.Areas.Admin.Controllers
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index");
         }
+        #region API CallS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = objProductList });
+        }
+        #endregion
     }
 }
